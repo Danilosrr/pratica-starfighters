@@ -1,16 +1,18 @@
 import { Request, Response } from "express";
-import { badRequestError, unprocessableEntityError } from "../middlewares/errorHandler.js";
 import battleService from "../Services/battleService.js";
 
 
-async function battleController(req:Request, res:Response){ 
-    const { firstUser, secondUser }:{ firstUser:string, secondUser:string }   = res.locals.body
+async function battleController(req:Request, res:Response){
+   try {    
+    const { firstUser, secondUser }:{ firstUser:string, secondUser:string }   = req.body
 
     const battle:any = await battleService.battleUsers({ firstUser, secondUser });
-    if (battle.message){
-        throw badRequestError;
-    }
+  
     return res.send(battle);
+   } catch (error) {
+        console.log(error);
+        return  res.sendStatus(500);
+   }
 }
 
 export default battleController;

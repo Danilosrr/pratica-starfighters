@@ -17,7 +17,7 @@ async function battleUsers({ firstUser, secondUser } : { firstUser:string, secon
         secondRequest = await axios.get(`https://api.github.com/users/${secondUser}/repos`);
     } catch (err) {
         console.log(err)
-        return badRequestError();
+        throw badRequestError('API request error.');
     }
 
     let firstUserCount = 0;
