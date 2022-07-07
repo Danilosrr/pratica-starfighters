@@ -23,7 +23,7 @@ export default function validSchema(schema) {
       res.locals.body = validation;
     } catch (error) {
       console.log(error);
-      return res.status(422).send(error.message);
+      throw unprocessableEntityError(error.message);
     }
 
     next();
